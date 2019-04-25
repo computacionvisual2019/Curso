@@ -8,7 +8,7 @@ float r, g, b, p;
 
 void setup() {
   size(1300, 800);
-  frameRate(20);
+  //  frameRate(20);
 
   colorMovie = new Movie(this, "demo2.mp4");
   colorMovie.play();  
@@ -33,18 +33,19 @@ void draw() {
   image(grayPG, 700, 0);
 }
 
-void movieEvent(Movie m) {  
-  grayMovie = colorMovie.copy();
-  grayMovie.loadPixels();
-  int size = grayMovie.pixels.length;
-  if (size != 0) {
-    for (int i = 0; i < size; i++) {  
-      r = red(grayMovie.pixels[i]);
-      g = green(grayMovie.pixels[i]);
-      b = blue(grayMovie.pixels[i]);  
-      p = (0.2126*r+0.7152*g+0.0722*b);  //  Algoritmo LUMA                                       
-      grayMovie.pixels[i] = color(p, p, p);  
-    }
-  }
+void movieEvent(Movie m) { 
   m.read();
+  //grayMovie = m.copy();
+  m.loadPixels();
+  println(m.pixels[100], grayMovie.pixels[100]);
+    grayMovie.loadPixels();
+  int size = m.pixels.length;
+  //for (int i = 0; i < size; i++) {  
+  //  r = red(m.pixels[i]);
+  //  g = green(m.pixels[i]);
+  //  b = blue(m.pixels[i]);  
+  //  p = (0.2126*r+0.7152*g+0.0722*b);  //  Algoritmo LUMA                                       
+  //  grayMovie.pixels[i] = color(p, p, p);
+  //}
+  //grayMovie.updatePixels();
 }
