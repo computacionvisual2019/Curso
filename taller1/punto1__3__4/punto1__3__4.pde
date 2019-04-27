@@ -1,3 +1,9 @@
+// Este codigo corresponde a los puntos 1, 3 y 4 del taller 1:
+//    Conversión a escala de grises.
+//    (solo para imágenes) Despliegue del histograma.
+//    (solo para imágenes) Segmentación de la imagen a partir del histograma.
+
+
 PGraphics dogColorPG, dogGreyPG, histoPG, dogGreySegPG;
 PImage colorImg, greyImg, greySegImg;
 
