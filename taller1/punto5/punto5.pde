@@ -38,11 +38,11 @@ void draw() {
   grayPG.image(grayMovie, 0, 0);
   grayPG.endDraw();
   image(grayPG, 700, 0);
+  println(frameRate);
 }
 
 void movieEvent(Movie m) { 
   m.read();
-  println(frameRate);
 }
 
 PImage toGray (PImage original, PImage modified) {
@@ -51,10 +51,10 @@ PImage toGray (PImage original, PImage modified) {
       r = red(original.pixels[i]);
       g = green(original.pixels[i]);
       b = blue(original.pixels[i]);       
-      //p = (0.2126*r+0.7152*g+0.0722*b);  //  Algoritmo LUMA    
-      p = ((r+g+b)/3);
-      modified.pixels[i] = color(p,p,p);
+      p = (0.2126*r+0.7152*g+0.0722*b);  //  Algoritmo LUMA    
+      modified.pixels[i] = color(p, p, p);
       grayMovie.updatePixels();
     }
   return modified;
+  
 }
