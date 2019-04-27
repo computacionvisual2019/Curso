@@ -1,17 +1,27 @@
 PGraphics dogColorPG, dogGreyPG, histoPG;
-PImage colorImg, greyImg, aclaradoImg, blurImg;
+PImage colorImg, greyImg, aclaradoImg, blurImg, edgesImg, embossImg;
 
 
 int w, h;
 int[] histogram;
+int matrixsize = 0;
+int divisor = 0;
 float r, g, b, p;
 float [][] sharpen = { { 0, -1, 0 },
                      { -1,  5, -1 },
                      { 0, -1, 0 } }; 
 
-float [][] blurred = { { 1, 1, 1 },
-                     { 1,  1, 1 },
-                     { 1, 1, 1 } }; 
+float [][] blurred = { { 0.0625, 0.125, 0.0625 },
+                     { 0.125,  0.25, 0.125 },
+                     { 0.0625, 0.125, 0.0625 } }; 
+                     
+float [][] edges = { { -1, -1, -1 },
+                     { -1,  8, -1 },
+                     { -1, -1, -1 } }; 
+                     
+float [][] emboss = { { -2, -1, 0 },
+                     { -1,  -1, 1},
+                     { 0, 1, -2 } }; 
 
 void setup() {
   size(1200, 730);
@@ -23,6 +33,8 @@ void setup() {
   //pasa la imagen a una matriz
   aclaradoImg = loadImage("data/colorfull.jpg");//sharp
   blurImg = loadImage("data/colorfull.jpg");//blurred
+  edgesImg = loadImage("data/colorfull.jpg");//edge
+  embossImg = loadImage("data/colorfull.jpg");//emboss
   
   greyImg = createImage(w, h, RGB);
   greyImg.loadPixels();
@@ -46,9 +58,11 @@ void setup() {
   text("Gray scale (LUMA)", 500, 20);
   histoPG = createGraphics(256, 236);
   text("Histogram", 880, 20);
-  text("Convolution mask (Sharp)",35,395);
-  
-  
+  textSize(20);
+  text("Convolution mask(Sharp)",0,395);
+  text("Convolution mask(Blur)",300,395);
+  text("Convolution mask(Edges)",590,395);
+  text("Convolution mask(Emboss)",870,395);
 }
 
 void draw() {
@@ -72,8 +86,8 @@ void draw() {
   histoPG.endDraw();
   image(histoPG, 800, 70);
   
-  image(aclaradoImg,20,410);
-  int matrixsize = sharpen.length;
+  image(aclaradoImg,0,410);
+  matrixsize = sharpen.length;
   aclaradoImg.loadPixels();
   for(int x = 0; x < aclaradoImg.width; x++){
     for(int y = 0; y < aclaradoImg.height; y++){
@@ -84,18 +98,44 @@ void draw() {
   }
   aclaradoImg.updatePixels();
   
-  image(blurImg,20,410);
-  int matrixsize = blurred.length;
+  image(blurImg,290,410);
+  matrixsize = blurred.length;
   blurImg.loadPixels();
-  int divisor = 9;
+  divisor = 1;
   for(int x = 0; x < blurImg.width; x++){
     for(int y = 0; y < blurImg.height; y++){
-      color c = convolucion(x,y, sharpen, matrixsize, aclaradoImg, divisor);
-      int loc = x + y*aclaradoImg.width;
-      aclaradoImg.pixels[loc] = c;
+      color c = convolucion(x,y, blurred, matrixsize, blurImg, divisor);
+      int loc = x + y*blurImg.width;
+      blurImg.pixels[loc] = c;
     }
   }
-  aclaradoImg.updatePixels();
+  blurImg.updatePixels();
+  
+  image(edgesImg,580,410);
+  matrixsize = edges.length;
+  edgesImg.loadPixels();
+  divisor = 1;
+  for(int x = 0; x < edgesImg.width; x++){
+    for(int y = 0; y < edgesImg.height; y++){
+      color c = convolucion(x,y, edges, matrixsize, edgesImg, divisor);
+      int loc = x + y*edgesImg.width;
+      edgesImg.pixels[loc] = c;
+    }
+  }
+  edgesImg.updatePixels();
+  
+  image(embossImg,860,410);
+  matrixsize = edges.length;
+  embossImg.loadPixels();
+  divisor = 1;
+  for(int x = 0; x < embossImg.width; x++){
+    for(int y = 0; y < embossImg.height; y++){
+      color c = convolucion(x,y, emboss, matrixsize, embossImg, divisor);
+      int loc = x + y*embossImg.width;
+      embossImg.pixels[loc] = c;
+    }
+  }
+  embossImg.updatePixels();
 }
 
 
