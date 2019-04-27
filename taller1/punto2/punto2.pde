@@ -1,7 +1,6 @@
 // Este codigo corresponde al punto 2 del taller 1:
 //    Aplicación de algunas máscaras de convolución.
 
-
 PGraphics dogColorPG, dogGreyPG, histoPG;
 PImage colorImg, greyImg, aclaradoImg, blurImg;
 
@@ -89,7 +88,7 @@ void draw() {
   aclaradoImg.updatePixels();
   
   image(blurImg,20,410);
-  matrixsize = blurred.length;
+  int matrixsize = blurred.length;
   blurImg.loadPixels();
   int divisor = 9;
   for(int x = 0; x < blurImg.width; x++){
