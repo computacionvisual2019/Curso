@@ -1,4 +1,4 @@
-//Este codigo corresponde al punto 5 del taller 1:
+//Este codigo corresponde al punto 5 del taller 1: //<>// //<>// //<>// //<>// //<>// //<>//
 //    (solo para video) Medición de la eficiencia computacional para las operaciones realizadas.
 
 
@@ -12,7 +12,7 @@ float r, g, b, p;
 
 void setup() {
   size(1300, 800);
-  frameRate(10);
+  //frameRate(10);
 
   colorMovie = new Movie(this, "demo2.mp4");
   colorMovie.play();  
@@ -32,6 +32,9 @@ void draw() {
   image(colorPG, 0, 0);
 
   grayPG.beginDraw();
+  grayMovie.loadPixels();
+  colorMovie.loadPixels();
+  grayMovie = toGray(colorMovie, grayMovie);
   grayPG.image(grayMovie, 0, 0);
   grayPG.endDraw();
   image(grayPG, 700, 0);
@@ -39,21 +42,19 @@ void draw() {
 
 void movieEvent(Movie m) { 
   m.read();
-  grayMovie = m.copy();
-  grayMovie.loadPixels();
-  //m.loadPixels();
-  //  println(m.pixels[100], grayMovie.pixels[100]);
-  int size = grayMovie.pixels.length;
-  if (size != 0 ) {
-    for (int i = 0; i < size; i++) {  
-      r = red(m.pixels[i]);
-      g = green(grayMovie.pixels[i]);
-      b = blue(grayMovie.pixels[i]);       
-      p = (0.2126*r+0.7152*g+0.0722*b);  //  Algoritmo LUMA                                       
-      grayMovie.pixels[i] = color(p, p, p);
-      //grayMovie.pixels[i] = color(14, 14, 14);
-      //grayMovie.updatePixels();
-    }
-  }
   println(frameRate);
+}
+
+PImage toGray (PImage original, PImage modified) {
+  
+  for (int i = 0; i < original.pixels.length; i++) {  
+      r = red(original.pixels[i]);
+      g = green(original.pixels[i]);
+      b = blue(original.pixels[i]);       
+      //p = (0.2126*r+0.7152*g+0.0722*b);  //  Algoritmo LUMA    
+      p = ((r+g+b)/3);
+      modified.pixels[i] = color(p,p,p);
+      grayMovie.updatePixels();
+    }
+  return modified;
 }
