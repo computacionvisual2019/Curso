@@ -2,7 +2,7 @@
 //    Aplicación de algunas máscaras de convolución.
 
  
-PGraphics dogColorPG, aclaradoPG, blurPG, edgesPG, embossPG;
+PGraphics dogColorPG, aclaradoPG, blurPG, edgesPG, embossPG; 
 PImage colorImg, aclaradoImg, blurImg, edgesImg, embossImg;
 
 
