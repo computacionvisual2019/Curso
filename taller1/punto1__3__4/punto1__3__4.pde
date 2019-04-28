@@ -5,7 +5,7 @@
 
 
 PGraphics dogColorPG, dogGreyPG, histoPG, dogGreySegPG;
-PImage colorImg, greyImg, greySegImg;
+PImage colorImg, greyImg, greySegImg; 
 
 
 int w, h, mouseX1, mouseY1, mouseX2, mouseY2;
