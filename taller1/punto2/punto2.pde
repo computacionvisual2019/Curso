@@ -3,7 +3,7 @@
 
  
 PGraphics dogColorPG, aclaradoPG, blurPG, edgesPG, embossPG; 
-PImage colorImg, aclaradoImg, blurImg, edgesImg, embossImg;
+PImage colorImg, aclaradoImg, blurImg, edgesImg, embossImg; 
 
 
 int w, h;
