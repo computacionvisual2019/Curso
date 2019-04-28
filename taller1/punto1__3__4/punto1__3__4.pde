@@ -47,7 +47,7 @@ void setup() {
   histoPG = createGraphics(256, 256);
   text("Histogram", 880, 40);
   dogGreySegPG = createGraphics(w, h);
-  text("Gray scale (LUMA) Seg", 500, h + 130);
+  text("Gray scale (LUMA) Seg", 470, h + 130);
   
 }
 

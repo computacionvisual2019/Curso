@@ -7,23 +7,24 @@ PImage colorImg, aclaradoImg, blurImg, edgesImg, embossImg;
 
 
 int w, h;
-int matrixsize, divisor = 0;
+int matrixsize = 0;
+int divisor = 0;
 float r, g, b, p;
 float [][] sharpen = { { 0, -1, 0 }, 
-                     { -1, 5, -1 }, 
-                     { 0, -1, 0 } }; 
+  { -1, 5, -1 }, 
+  { 0, -1, 0 } }; 
 
 float [][] blurred = { { 0.0625, 0.125, 0.0625 }, 
-                     { 0.125, 0.25, 0.125 }, 
-                     { 0.0625, 0.125, 0.0625 } }; 
+  { 0.125, 0.25, 0.125 }, 
+  { 0.0625, 0.125, 0.0625 } }; 
 
 float [][] edges = { { -1, -1, -1 }, 
-                   { -1, 8, -1 }, 
-                   { -1, -1, -1 } }; 
+  { -1, 8, -1 }, 
+  { -1, -1, -1 } }; 
 
 float [][] emboss = { { -2, -1, 0 }, 
-                    { -1, -1, 1}, 
-                    { 0, 1, -2 } }; 
+  { -1, -1, 1}, 
+  { 0, 1, -2 } }; 
 
 void setup() {
   size(1200, 730);
@@ -32,15 +33,35 @@ void setup() {
   w = colorImg.width;
   h = colorImg.height;
 
-
   //pasa la imagen a una matriz
   aclaradoImg = loadImage("data/colorfull.jpg");//sharp
   blurImg = loadImage("data/colorfull.jpg");//blurred
   edgesImg = loadImage("data/colorfull.jpg");//edge
   embossImg = loadImage("data/colorfull.jpg");//emboss
 
+  fill(0);
+  textSize(23);
+  text("Real image", 170, 40);
+  dogColorPG = createGraphics(w, h);
+  textSize(20);
+  text("Convolution mask(Sharp)", 0, 395);
+  aclaradoPG = createGraphics(w, h);
+  text("Convolution mask(Blur)", 300, 395);
+  blurPG = createGraphics(w, h);
+  text("Convolution mask(Edges)", 590, 395);
+  edgesPG = createGraphics(w, h);
+  text("Convolution mask(Emboss)", 870, 395);
+  embossPG = createGraphics(w, h);
+}
 
-  //mascara sharpen
+void draw() {
+  dogColorPG.beginDraw();
+  dogColorPG.image(colorImg, 0, 0);
+  dogColorPG.endDraw();
+  image(dogColorPG, 100, 50);
+
+
+  aclaradoPG.beginDraw();
   matrixsize = sharpen.length;
   aclaradoImg.loadPixels();
   for (int x = 0; x < aclaradoImg.width; x++) {
@@ -51,9 +72,12 @@ void setup() {
     }
   }
   aclaradoImg.updatePixels();
-  
-  
-  //mascara blurred
+  aclaradoPG.image(aclaradoImg, 0, 0);
+  aclaradoPG.endDraw();
+  image(aclaradoPG, 400, 50);
+
+
+  image(blurImg, 290, 410);
   matrixsize = blurred.length;
   blurImg.loadPixels();
   divisor = 1;
@@ -67,7 +91,7 @@ void setup() {
   blurImg.updatePixels();
 
 
-  //mascara edges
+  image(edgesImg, 580, 410);
   matrixsize = edges.length;
   edgesImg.loadPixels();
   divisor = 1;
@@ -79,10 +103,10 @@ void setup() {
     }
   }
   edgesImg.updatePixels();
-  
-  
-  //mascara emboss
-  matrixsize = emboss.length;
+
+
+  image(embossImg, 860, 410);
+  matrixsize = edges.length;
   embossImg.loadPixels();
   divisor = 1;
   for (int x = 0; x < embossImg.width; x++) {
@@ -93,52 +117,6 @@ void setup() {
     }
   }
   embossImg.updatePixels();
-  
-  
-  fill(0);
-  textSize(23);
-  text("Real image", 170, 40);
-  dogColorPG = createGraphics(w, h);
-  textSize(20);
-  text("Convolution mask(Sharp)", 430, 40);
-  aclaradoPG = createGraphics(w, h);
-  text("Convolution mask(Blur)", 740, 40);
-  blurPG = createGraphics(w, h);
-  text("Convolution mask(Edges)", 120, 395);
-  edgesPG = createGraphics(w, h);
-  text("Convolution mask(Emboss)", 420, 395);
-  embossPG = createGraphics(w, h);
-}
-
-void draw() {
-  dogColorPG.beginDraw();
-  dogColorPG.image(colorImg, 0, 0);
-  dogColorPG.endDraw();
-  image(dogColorPG, 100, 50); 
-
-
-  aclaradoPG.beginDraw();
-  aclaradoPG.image(aclaradoImg, 0, 0);
-  aclaradoPG.endDraw();
-  image(aclaradoPG, 400, 50);
-
-
-  blurPG.beginDraw();
-  blurPG.image(blurImg, 0, 0);
-  blurPG.endDraw();
-  image(blurPG, 700, 50);
-
-
-  edgesPG.beginDraw();
-  edgesPG.image(edgesImg, 0, 0);
-  edgesPG.endDraw();
-  image(edgesPG, 100, 400);
-
-
-  embossPG.beginDraw();
-  embossPG.image(embossImg, 0, 0);
-  embossPG.endDraw();
-  image(embossPG, 400, 400);
 }
 
 

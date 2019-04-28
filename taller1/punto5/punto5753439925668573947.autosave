@@ -1,4 +1,4 @@
-//Este codigo corresponde al punto 5 del taller 1: //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+//Este codigo corresponde al punto 5 del taller 1: //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
 //    (solo para video) Medición de la eficiencia computacional para las operaciones realizadas.
 
 
@@ -59,14 +59,13 @@ void draw() {
 
 
   blurredPG.beginDraw();
-  toBlurr();
+  
   blurredPG.image(blurredMovie, 0, 0);
   blurredPG.endDraw();
   image(blurredPG, 0, h);
 
 
   edgesPG.beginDraw();
-  toEdges();
   edgesPG.image(edgesMovie, 0, 0);
   edgesPG.endDraw();
   image(edgesPG, 700, h);
@@ -122,32 +121,15 @@ color convolucion(int x, int y, float[][] matrix, int matrixsize, PImage img, in
 
 
 void toBlurr(){
-  blurredMovie = colorMovie.copy();
   int matrixsize = blurred.length;
-  blurredMovie.loadPixels();
-  int divisor = 1;
-  for (int x = 0; x < blurredMovie.width; x++) {
-    for (int y = 0; y < blurredMovie.height; y++) {
-      color c = convolucion(x, y, blurred, matrixsize, blurredMovie, divisor);
-      int loc = x + y*blurredMovie.width;
-      blurredMovie.pixels[loc] = c;
+  blurImg.loadPixels();
+  divisor = 1;
+  for (int x = 0; x < blurImg.width; x++) {
+    for (int y = 0; y < blurImg.height; y++) {
+      color c = convolucion(x, y, blurred, matrixsize, blurImg, divisor);
+      int loc = x + y*blurImg.width;
+      blurImg.pixels[loc] = c;
     }
   }
-  blurredMovie.updatePixels();
-}
-
-
-void toEdges(){
-  edgesMovie = colorMovie.copy();
-  int matrixsize = edges.length;
-  edgesMovie.loadPixels();
-  int divisor = 1;
-  for (int x = 0; x < edgesMovie.width; x++) {
-    for (int y = 0; y < edgesMovie.height; y++) {
-      color c = convolucion(x, y, edges, matrixsize, edgesMovie, divisor);
-      int loc = x + y*edgesMovie.width;
-      edgesMovie.pixels[loc] = c;
-    }
-  }
-  edgesMovie.updatePixels();
+  blurImg.updatePixels();
 }
