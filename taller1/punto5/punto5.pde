@@ -2,7 +2,7 @@
 //    (solo para video) Medición de la eficiencia computacional para las operaciones realizadas.
 
 
-import processing.video.*;
+import processing.video.*; 
 Movie colorMovie;
 PGraphics colorPG, grayPG, blurredPG, sharpenPG;
 PImage grayMovie, blurredMovie, sharpenMovie;
