@@ -1,11 +1,11 @@
-//Este codigo corresponde al punto 5 del taller 1: //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+//Este codigo corresponde al punto 5 del taller 1: //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
 //    (solo para video) Medición de la eficiencia computacional para las operaciones realizadas.
 
 
 import processing.video.*;
 Movie colorMovie;
-PGraphics colorPG, grayPG, blurredPG, edgesPG;
-PImage grayMovie, blurredMovie, edgesMovie;
+PGraphics colorPG, grayPG, blurredPG, sharpenPG;
+PImage grayMovie, blurredMovie, sharpenMovie;
 
 
 int w, h;
@@ -15,9 +15,17 @@ float [][] blurred = { { 0.0625, 0.125, 0.0625 },
                      { 0.125, 0.25, 0.125 }, 
                      { 0.0625, 0.125, 0.0625 } }; 
                      
-float [][] edges = { { -1, -1, -1 }, 
-                   { -1, 8, -1 }, 
-                   { -1, -1, -1 } }; 
+//float [][] edges = { { -1, -1, -1 }, 
+//                   { -1, 8, -1 }, 
+//                   { -1, -1, -1 } }; 
+
+float [][] sharpen = { { 0, -1, 0 }, 
+                     { -1, 5, -1 }, 
+                     { 0, -1, 0 } }; 
+
+//float [][] emboss = { { 0, 1, 0 }, 
+//                    { 1, -4, 1}, 
+//                    { 0, 1, 2 } }; 
                    
 
 void setup() {
@@ -33,13 +41,13 @@ void setup() {
 
   grayMovie = createImage(w, h, RGB);
   blurredMovie = createImage(w, h, RGB);
-  edgesMovie = createImage(w, h, RGB);
+  sharpenMovie = createImage(w, h, RGB);
 
 
   colorPG = createGraphics(w, h);
   grayPG = createGraphics(w, h);
   blurredPG = createGraphics(w, h);
-  edgesPG = createGraphics(w, h);
+  sharpenPG = createGraphics(w, h);
 }
 
 void draw() {
@@ -65,11 +73,11 @@ void draw() {
   image(blurredPG, 0, h);
 
 
-  edgesPG.beginDraw();
-  toEdges();
-  edgesPG.image(edgesMovie, 0, 0);
-  edgesPG.endDraw();
-  image(edgesPG, 700, h);
+  sharpenPG.beginDraw();
+  toSharpen();
+  sharpenPG.image(sharpenMovie, 0, 0);
+  sharpenPG.endDraw();
+  image(sharpenPG, 700, h);
 
   println(frameRate);
 }
@@ -137,17 +145,16 @@ void toBlurr(){
 }
 
 
-void toEdges(){
-  edgesMovie = colorMovie.copy();
-  int matrixsize = edges.length;
-  edgesMovie.loadPixels();
-  int divisor = 1;
-  for (int x = 0; x < edgesMovie.width; x++) {
-    for (int y = 0; y < edgesMovie.height; y++) {
-      color c = convolucion(x, y, edges, matrixsize, edgesMovie, divisor);
-      int loc = x + y*edgesMovie.width;
-      edgesMovie.pixels[loc] = c;
+void toSharpen(){
+  sharpenMovie = colorMovie.copy();
+  int matrixsize = sharpen.length;
+  sharpenMovie.loadPixels();
+  for (int x = 0; x < sharpenMovie.width; x++) {
+    for (int y = 0; y < sharpenMovie.height; y++) {
+      color c = convolucion(x, y, sharpen, matrixsize, sharpenMovie, 1);
+      int loc = x + y*sharpenMovie.width;
+      sharpenMovie.pixels[loc] = c;
     }
   }
-  edgesMovie.updatePixels();
+  sharpenMovie.updatePixels();
 }
