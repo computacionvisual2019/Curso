@@ -1,7 +1,7 @@
 // Este codigo corresponde al punto 2 del taller 1:
 //    Aplicación de algunas máscaras de convolución.
 
-
+ 
 PGraphics dogColorPG, aclaradoPG, blurPG, edgesPG, embossPG;
 PImage colorImg, aclaradoImg, blurImg, edgesImg, embossImg;
 
