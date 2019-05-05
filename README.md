@@ -1,5 +1,5 @@
-# INTEGRANTES DEL GRUPO
-
-- Juan Sebastian Castelblanco Hernandez
-- Nicolas Ricardo Enciso
-- Hernan Camilo Rodriguez León
+| INTEGRANTES DEL GRUPO                     |USUARIO GITHUB       |USUARIO UNAL|
+|-------------------------------------------|---------------------|------------|
+| Juan Sebastian Castelblanco Hernandez  | jscastelblancoh | jscastelblancoh |
+| Nicolas Ricardo Enciso                 | nicolasenciso   | nricardoe |
+| Hernan Camilo Rodriguez León           | UNhcrodriguezl  | hcrodriguezl |
