@@ -15,6 +15,7 @@ void draw() {
   case 1:
     break;
   case 2:
+    illusion_structure();
     break;
   case 3:
     break;
@@ -26,14 +27,14 @@ void draw() {
 }
 
 /* 
- Hering_illusion. 
- Tomado y adaptado de https://www.openprocessing.org/sketch/168636/
+ Nombre: Hering_illusion. 
  Autor: Greg Wittmann	
  Descripcion: lineas que parecen curvarse al rededor de un punto central.
+ Tomado y adaptado de https://www.openprocessing.org/sketch/168636/
  */
 
 void hering_illusion() {
-
+  
   translate(width/2, height/2);
   stroke(0, 0, 100);
   strokeWeight(2);
@@ -50,6 +51,36 @@ void hering_illusion() {
   translate(-width/2, -height/2);
   line(270, 0, 270, height);
   line(430, 0, 430, height);
+}
+
+
+/* 
+ Nombre: Illusion Structures. 
+ Autor:  Connor.
+ Descripcion: Figura que se deforma sin un sentido racional.
+ Tomado y adaptado de https://www.openprocessing.org/sketch/413457
+ */
+
+
+void illusion_structure() {
+
+  rectMode(CENTER);
+  strokeWeight(1);
+  
+  for (int j = 0; j < 50; j++) {
+    float i = 0;
+    while (i < 25) {
+      fill(99, 80, 100);
+      push();
+      translate(width/2, i*15+j);
+      scale(i * .08);
+      rotate((radians(frameCount)));
+      rect(0+j/i, i-j, 10*i, 20);
+      pop();
+      i++;
+    }
+    j++;
+  }
 }
 
 
