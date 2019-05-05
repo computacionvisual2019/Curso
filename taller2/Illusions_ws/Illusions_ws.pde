@@ -1,3 +1,9 @@
+/*
+Seis iluciones opticas:
+  2 estaticas, 2 en movimiento automatico y 2 interactivas.
+  Para cambiar de ilusion utilice las flechas izquierda y derecha, 
+    para revelar la ilusion (si asi lo admite la imagen) utilice la tecla de espacio  
+*/
 
 int actual = 0;
 boolean show = true;
@@ -81,6 +87,8 @@ void illusion_structure() {
     }
     j++;
   }
+
+  rectMode(CORNER);
 }
 
 
