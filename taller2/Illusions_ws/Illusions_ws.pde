@@ -95,6 +95,12 @@ void illusion_structure() {
   rectMode(CORNER);
 }
 
+/* 
+ Nombre: Illusion. 
+ Autor: Femto-physique  
+ Descripcion: La estructura parece rotar en torno a un eje central estatico.
+ Tomado y adaptado de https://www.openprocessing.org/sketch/707417
+ */
 void illusionPoints(){
   noStroke();
   strokeWeight(1);
@@ -118,6 +124,12 @@ void illusionPoints(){
   FN++;
 }
 
+/* 
+ Nombre: Stepping Feet. 
+ Autor: Greg Wittmann  
+ Descripcion: Los cuadrados parecen estar avanzando en forma asincrona.
+ Tomado y adaptado de https://www.openprocessing.org/sketch/168574
+ */
 void illusionSquares(){
   int side = 80;
   if (Y >= height-side/2) {
