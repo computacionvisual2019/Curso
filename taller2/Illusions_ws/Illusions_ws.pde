@@ -19,6 +19,7 @@ void draw() {
     hering_illusion();
     break ;
   case 1:
+    square();
     break;
   case 2:
     illusion_structure();
@@ -39,7 +40,7 @@ void draw() {
  Tomado y adaptado de https://www.openprocessing.org/sketch/168636/
  */
 
-void hering_illusion() {
+void hering_illusion() { //la de lineas azules estatico
   
   translate(width/2, height/2);
   stroke(0, 0, 100);
@@ -69,26 +70,54 @@ void hering_illusion() {
 
 
 void illusion_structure() {
-
-  rectMode(CENTER);
-  strokeWeight(1);
-  
-  for (int j = 0; j < 50; j++) {
-    float i = 0;
-    while (i < 25) {
-      fill(99, 80, 100);
-      push();
-      translate(width/2, i*15+j);
-      scale(i * .08);
-      rotate((radians(frameCount)));
-      rect(0+j/i, i-j, 10*i, 20);
-      pop();
-      i++;
+  if(show){
+    rectMode(CENTER);
+    strokeWeight(1);
+    
+    for (int j = 0; j < 50; j++) {
+      float i = 0;
+      while (i < 25) {
+        fill(99, 80, 100);
+        push();
+        translate(width/2, i*15+j);
+        scale(i * .08);
+        rotate((radians(frameCount)));
+        rect(0+j/i, i-j, 10*i, 20);
+        pop();
+        i++;
+      }
+      j++;
     }
-    j++;
-  }
+    rectMode(CORNER);
+}
 
-  rectMode(CORNER);
+  
+}
+
+void benussi(){
+  strokeWeight(2);
+  ellipse(350, 350, 550, 550);
+  while(true){
+    push();
+    ellipse(350, 350, 100, 100);
+    rotate(20);
+    pop();
+    
+  }
+}
+
+void square(){
+  background(255,0,255);
+  strokeWeight(0);
+  fill(255,255,255);
+  rect(250, 250, 200, 50);
+  rect(250, 350, 200, 50);
+  //right
+  triangle(500, 250, 500, 400, 550,250+75 );
+  //upper
+  triangle(250, 200, 450, 200, 350, 100);
+  //down
+  triangle(250, 450, 350, 500, 450, 450);
 }
 
 
