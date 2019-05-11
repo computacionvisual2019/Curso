@@ -4,6 +4,7 @@
  
 PGraphics dogColorPG, aclaradoPG, blurPG, edgesPG, embossPG; 
 PImage colorImg, aclaradoImg, blurImg, edgesImg, embossImg; 
+PImage blurrConv;
 
 
 int w, h;
@@ -108,7 +109,11 @@ void setup() {
   edgesPG = createGraphics(w, h);
   text("Convolution mask(Emboss)", 420, 395);
   embossPG = createGraphics(w, h);
+
+  //blurrConvolution(colorImg, blurred, blurrConv);
 }
+
+
 
 void draw() {
   dogColorPG.beginDraw();
@@ -167,4 +172,26 @@ color convolucion(int x, int y, float[][] matrix, int matrixsize, PImage img, in
   btotal = constrain(btotal, 0, 255);
   // Return the resulting color
   return color(rtotal, gtotal, btotal);
+}
+
+
+PImage blurrConvolution (PImage original, float[][] matrix, PImage blurrConv) {
+  original.loadPixels();
+  w = original.width;
+  h = original.height;
+  color col = 0;
+  blurrConv = createImage(w, h, RGB);
+  println(original.pixels[1]);
+  println(original.get(1, 1));
+  for (int i = 1; i < w; i += 1) {
+    for (int j = 1; j < h; j += 1) {
+      for (float[] o : matrix) {
+        for (float p : o) {
+          col = (original.get(j-1, i-1)*int(matrix[0][0]));
+        }
+      }
+      original.set(j, i, col);
+    }
+  }
+  return blurrConv;
 }

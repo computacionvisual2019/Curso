@@ -158,3 +158,7 @@ void toSharpen(){
   }
   sharpenMovie.updatePixels();
 }
+
+
+void blurConvolution (){
+}
