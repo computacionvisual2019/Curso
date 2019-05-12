@@ -30,6 +30,7 @@ void draw() {
     illusionSquares();
     break;
   case 4:
+    crossed();
     break;
   case 5:  
     break;
@@ -91,8 +92,6 @@ void illusion_structure() {
     }
     j++;
   }
-
-  rectMode(CORNER);
 }
 
 /* 
@@ -160,6 +159,78 @@ void illusionSquares(){
   fill(255, 255, 0);
   rect(160, Y, side, side);
   rect(480, Y, side, side);
+}
+
+void crossed(){ //impossible object https://www.imagenesmi.com/im%C3%A1genes/impossible-objects-illusions-fa.html
+  stroke(200);
+  background(25);
+  line(448,18, 115, 215);
+  line(448, 18, 490, 50);
+  line(490, 50, 180, 238);
+  line(180, 238, 115, 215);
+  line(115, 215, 115, 525);//
+  line(115, 525, 430, 682);
+  line(430, 682, 490, 650);
+  line(490, 650, 490, 50);
+  line(180, 238, 180, 470);
+  line(180, 470, 380, 570);//
+  line(180, 470, 235, 440);
+  line(235, 440, 235, 260);
+  line(235, 260, 430, 140);
+  line(430, 682, 430, 140);
+  line(380, 570, 380, 170);//
+  line(235, 440, 380, 510);
+
+  line(380,170, 430,140);
+  
+  stroke(300);                   
+  colorMode( HSB, 340,60,90 );
+  fill( 28, 100, 50 );
+  beginShape();
+  vertex(180, 470);
+  vertex(235, 440);
+  vertex(380, 510);
+  vertex(380,570);
+  endShape();
+
+  stroke(300);                   
+  colorMode( HSB, 340,60,60 );
+  fill( 28, 100, 50 );
+  beginShape();
+  vertex(448,18); 
+  vertex(115, 215);
+  vertex(448, 18);
+  vertex(490, 50);
+  vertex(490, 50);
+  vertex(180, 238);
+  vertex(180, 238);
+  vertex(115, 215);
+  endShape();
+
+  stroke(300);                   
+  colorMode( HSB, 340,60,50 );
+  fill( 28, 100, 50 );
+  beginShape();
+  vertex(490, 50);
+  vertex(180, 238);
+  vertex(180, 238);
+  vertex(180, 470);
+  vertex(180, 470);
+  vertex(235, 440);
+  vertex(235, 440);
+  vertex(235, 260);
+  vertex(235, 260);
+  vertex(430, 140);
+  vertex(430, 682);
+  vertex(430, 140);
+  vertex(430, 682);
+  vertex(490, 650);
+  vertex(490, 650);
+  vertex(490, 50);
+  endShape();
+
+  
+  
 }
 
 void keyPressed() {
