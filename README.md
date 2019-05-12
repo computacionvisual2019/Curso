@@ -21,6 +21,6 @@ Implementación de seis ilusiones ópticas distribuidas de la siguiente manera:
 |Hering illusion|Geométrica|Autor: Greg Wittmann|Al presionar la tecla espacio, se desdibujan las lineas del fondo para revelar la ilusión| https://www.openprocessing.org/sketch/168636/|
 |Point illusion|Psicológica|Autor: Femto-physique|Al presionar espacio se dibujan las lineas sobre las cuales se desplazan los puntos|https://www.openprocessing.org/sketch/707417|
 |Structures illusion|Geométrica de movimiento|Autor: Connor|No hay interactividad|https://www.openprocessing.org/sketch/413457|
-|Steeping feet|Psicologica|Greg Wittmann|Con la tecla espacio se eliminan los rectangulos que dan vida a la ilusión|https://www.openprocessing.org/sketch/168574|
-|Imposible object|Ambigua|||https://www.imagenesmi.com/im%C3%A1genes/impossible-objects-illusions-fa.html|
-|         |           |            |                                    |                             |
+|Steeping feet|Psicologica|Autor: Greg Wittmann|Con la tecla espacio se eliminan los rectangulos que dan vida a la ilusión|https://www.openprocessing.org/sketch/168574|
+|Imposible object|Ambigua||No hay interactividad|https://www.imagenesmi.com/im%C3%A1genes/impossible-objects-illusions-fa.html|
+|Vanishing point|Psicológica|Autor: Shane Solari|El movimiento del mouse indica el sentido hacia el cual se dirigen las lineas desde el punto de origen|https://www.openprocessing.org/sketch/523058|

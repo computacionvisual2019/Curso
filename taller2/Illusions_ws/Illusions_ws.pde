@@ -1,14 +1,18 @@
 /*
 Seis iluciones opticas:
-  2 estaticas, 2 en movimiento automatico y 2 interactivas.
-  Para cambiar de ilusion utilice las flechas izquierda y derecha, 
-    para revelar la ilusion (si asi lo admite la imagen) utilice la tecla de espacio  
-*/
+ 2 estaticas, 2 en movimiento automatico y 2 interactivas.
+ Para cambiar de ilusion utilice las flechas izquierda y derecha, 
+ para revelar la ilusion (si asi lo admite la imagen) utilice la tecla de espacio  
+ */
 int FN = 0;
 int actual = 0;
 boolean show = true;
 int Y = 40;
 int s = 0;
+boolean Ink = true;
+int points=1000;
+
+
 
 void setup() {
   size(700, 700);
@@ -33,9 +37,11 @@ void draw() {
     crossed();
     break;
   case 5:  
+    vanishingPoint();
     break;
   }
 }
+
 
 /* 
  Nombre: Hering_illusion. 
@@ -94,13 +100,15 @@ void illusion_structure() {
   }
 }
 
+
 /* 
  Nombre: Illusion. 
  Autor: Femto-physique  
  Descripcion: La estructura parece rotar en torno a un eje central estatico.
  Tomado y adaptado de https://www.openprocessing.org/sketch/707417
  */
-void illusionPoints(){
+
+void illusionPoints() {
   noStroke();
   strokeWeight(1);
   colorMode(HSB, 360, 255, 255);
@@ -123,13 +131,15 @@ void illusionPoints(){
   FN++;
 }
 
+
 /* 
  Nombre: Stepping Feet. 
  Autor: Greg Wittmann  
  Descripcion: Los cuadrados parecen estar avanzando en forma asincrona.
  Tomado y adaptado de https://www.openprocessing.org/sketch/168574
  */
-void illusionSquares(){
+
+void illusionSquares() {
   int side = 80;
   if (Y >= height-side/2) {
     s = 1;
@@ -142,16 +152,16 @@ void illusionSquares(){
   } else {
     Y--;
   }
-  
+
   rectMode(CORNER);
   noStroke();
   fill(0);
-  if(show) {
+  if (show) {
     for (int y=0; y<700; y=y+40) {
       rect(0, y, 700, 20);
     }
   }
-  
+
   rectMode(CENTER);
   fill(0, 0, 30);
   rect(320, Y, side, side);
@@ -161,10 +171,17 @@ void illusionSquares(){
   rect(480, Y, side, side);
 }
 
-void crossed(){ //impossible object https://www.imagenesmi.com/im%C3%A1genes/impossible-objects-illusions-fa.html
+
+/*
+Nombre: Impossible object
+ Descripcion: Un objeto ambiguo en su parte superior e inferior
+ Tomado de: https://www.imagenesmi.com/im%C3%A1genes/impossible-objects-illusions-fa.html
+ */
+
+void crossed() {
   stroke(200);
   background(25);
-  line(448,18, 115, 215);
+  line(448, 18, 115, 215);
   line(448, 18, 490, 50);
   line(490, 50, 180, 238);
   line(180, 238, 115, 215);
@@ -181,23 +198,23 @@ void crossed(){ //impossible object https://www.imagenesmi.com/im%C3%A1genes/imp
   line(380, 570, 380, 170);//
   line(235, 440, 380, 510);
 
-  line(380,170, 430,140);
-  
+  line(380, 170, 430, 140);
+
   stroke(300);                   
-  colorMode( HSB, 340,60,90 );
+  colorMode( HSB, 340, 60, 90 );
   fill( 28, 100, 50 );
   beginShape();
   vertex(180, 470);
   vertex(235, 440);
   vertex(380, 510);
-  vertex(380,570);
+  vertex(380, 570);
   endShape();
 
   stroke(300);                   
-  colorMode( HSB, 340,60,60 );
+  colorMode( HSB, 340, 60, 60 );
   fill( 28, 100, 50 );
   beginShape();
-  vertex(448,18); 
+  vertex(448, 18); 
   vertex(115, 215);
   vertex(448, 18);
   vertex(490, 50);
@@ -208,7 +225,7 @@ void crossed(){ //impossible object https://www.imagenesmi.com/im%C3%A1genes/imp
   endShape();
 
   stroke(300);                   
-  colorMode( HSB, 340,60,50 );
+  colorMode( HSB, 340, 60, 50 );
   fill( 28, 100, 50 );
   beginShape();
   vertex(490, 50);
@@ -228,9 +245,28 @@ void crossed(){ //impossible object https://www.imagenesmi.com/im%C3%A1genes/imp
   vertex(490, 650);
   vertex(490, 50);
   endShape();
+}
 
-  
-  
+
+/*
+Nombre: Vanishing point
+ Autor: Shane Solari.
+ Descripcion: Lineas que surgen desde un punto central y que siguen la dirección del mouse a medida que este se desplaza por la pantalla
+ Tomado y adaptado de : https://www.openprocessing.org/sketch/523058
+ */
+
+void vanishingPoint() {
+
+  if (Ink == true) {
+    background(100);
+    for (int x=200; x<points; x+=200) {
+      for (int y=200; y<points; y+=200) {
+        line(mouseX + x - 500, mouseY + y - 500, width/2, height/2);
+      }
+    }
+  } else {
+    noLoop();
+  }
 }
 
 void keyPressed() {
