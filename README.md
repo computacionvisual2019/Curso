@@ -19,7 +19,7 @@ Implementación de seis ilusiones ópticas distribuidas de la siguiente manera:
 | Ilusión         | Categoria | Referencia | Tipo de interactividad (si aplica) | URL código base (si aplica) |
 |-----------------|-----------|------------|------------------------------------|-----------------------------|
 |Ilusión de Hering|Geométrica|Autor: Greg Wittmann|Al presionar la tecla espacio, se desdibujan las lineas del fondo para revelar la ilusión| https://www.openprocessing.org/sketch/168636/|
-|         |           |            |                                    |                             |
+|Ilusión de puntos|Psicológica|Autor: Femto-physique|Al presionar espacio se dibujan las lineas sobre las cuales se desplazan los puntos|https://www.openprocessing.org/sketch/707417|
 |Ilusión de estructura|Geométrica de movimiento|Autor: Connor|No hay interactividad|https://www.openprocessing.org/sketch/413457|
 |         |           |            |                                    |                             |
 |         |           |            |                                    |                             |
