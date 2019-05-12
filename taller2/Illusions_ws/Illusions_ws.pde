@@ -4,9 +4,11 @@ Seis iluciones opticas:
   Para cambiar de ilusion utilice las flechas izquierda y derecha, 
     para revelar la ilusion (si asi lo admite la imagen) utilice la tecla de espacio  
 */
-
+int FN = 0;
 int actual = 0;
 boolean show = true;
+int Y = 40;
+int s = 0;
 
 void setup() {
   size(700, 700);
@@ -19,29 +21,31 @@ void draw() {
     hering_illusion();
     break ;
   case 1:
-    square();
+    illusionPoints();
     break;
   case 2:
     illusion_structure();
     break;
   case 3:
+    illusionSquares();
     break;
   case 4:
+    crossed();
     break;
-  case 5:	
+  case 5:  
     break;
   }
 }
 
 /* 
  Nombre: Hering_illusion. 
- Autor: Greg Wittmann	
+ Autor: Greg Wittmann  
  Descripcion: lineas que parecen curvarse al rededor de un punto central.
  Tomado y adaptado de https://www.openprocessing.org/sketch/168636/
  */
 
-void hering_illusion() { //la de lineas azules estatico
-  
+void hering_illusion() {
+  colorMode(RGB, 255); 
   translate(width/2, height/2);
   stroke(0, 0, 100);
   strokeWeight(2);
@@ -70,64 +74,171 @@ void hering_illusion() { //la de lineas azules estatico
 
 
 void illusion_structure() {
-  if(show){
-    rectMode(CENTER);
-    strokeWeight(1);
-    
-    for (int j = 0; j < 50; j++) {
-      float i = 0;
-      while (i < 25) {
-        fill(99, 80, 100);
-        push();
-        translate(width/2, i*15+j);
-        scale(i * .08);
-        rotate((radians(frameCount)));
-        rect(0+j/i, i-j, 10*i, 20);
-        pop();
-        i++;
-      }
-      j++;
+  colorMode(RGB, 255);
+  rectMode(CENTER);
+  strokeWeight(1);
+  stroke(200, 0, 0);
+  for (int j = 0; j < 50; j++) {
+    float i = 0;
+    while (i < 25) {
+      fill(99, 80, 100);
+      push();
+      translate(width/2, i*15+j);
+      scale(i * .08);
+      rotate((radians(frameCount)));
+      rect(0+j/i, i-j, 10*i, 20);
+      pop();
+      i++;
     }
-    rectMode(CORNER);
-}
-
-  
-}
-
-void benussi(){
-  strokeWeight(2);
-  ellipse(350, 350, 550, 550);
-  while(true){
-    push();
-    ellipse(350, 350, 100, 100);
-    rotate(20);
-    pop();
-    
+    j++;
   }
 }
 
-void square(){
-  background(255,0,255);
-  strokeWeight(0);
-  fill(255,255,255);
-  rect(250, 250, 200, 50);
-  rect(250, 350, 200, 50);
-  //right
-  triangle(500, 250, 500, 400, 550,250+75 );
-  //upper
-  triangle(250, 200, 450, 200, 350, 100);
-  //down
-  triangle(250, 450, 350, 500, 450, 450);
+/* 
+ Nombre: Illusion. 
+ Autor: Femto-physique  
+ Descripcion: La estructura parece rotar en torno a un eje central estatico.
+ Tomado y adaptado de https://www.openprocessing.org/sketch/707417
+ */
+void illusionPoints(){
+  noStroke();
+  strokeWeight(1);
+  colorMode(HSB, 360, 255, 255);
+  background(0, 0, 0);
+  pushMatrix();
+  translate(width/2, height/2);
+  if (!show) {
+    stroke(100);
+    for (int i=0; i<20; i++) {
+      rotate(TWO_PI/20);  
+      line(250, 0, 5, 0);
+    }
+  }
+  for (int i=0; i<20; i++) {
+    rotate(TWO_PI/20);
+    fill(360*i/20, 255, 255);
+    ellipse(100*(1.1+1*cos(.075*FN+PI*6*i/20)), 0, 15, 15);
+  }
+  popMatrix();
+  FN++;
 }
 
+/* 
+ Nombre: Stepping Feet. 
+ Autor: Greg Wittmann  
+ Descripcion: Los cuadrados parecen estar avanzando en forma asincrona.
+ Tomado y adaptado de https://www.openprocessing.org/sketch/168574
+ */
+void illusionSquares(){
+  int side = 80;
+  if (Y >= height-side/2) {
+    s = 1;
+  }
+  if (Y == side/2) {
+    s = 0;
+  }
+  if (s == 0) {
+    Y++;
+  } else {
+    Y--;
+  }
+  
+  rectMode(CORNER);
+  noStroke();
+  fill(0);
+  if(show) {
+    for (int y=0; y<700; y=y+40) {
+      rect(0, y, 700, 20);
+    }
+  }
+  
+  rectMode(CENTER);
+  fill(0, 0, 30);
+  rect(320, Y, side, side);
+  rect(640, Y, side, side);
+  fill(255, 255, 0);
+  rect(160, Y, side, side);
+  rect(480, Y, side, side);
+}
 
+void crossed(){ //impossible object https://www.imagenesmi.com/im%C3%A1genes/impossible-objects-illusions-fa.html
+  stroke(200);
+  background(25);
+  line(448,18, 115, 215);
+  line(448, 18, 490, 50);
+  line(490, 50, 180, 238);
+  line(180, 238, 115, 215);
+  line(115, 215, 115, 525);//
+  line(115, 525, 430, 682);
+  line(430, 682, 490, 650);
+  line(490, 650, 490, 50);
+  line(180, 238, 180, 470);
+  line(180, 470, 380, 570);//
+  line(180, 470, 235, 440);
+  line(235, 440, 235, 260);
+  line(235, 260, 430, 140);
+  line(430, 682, 430, 140);
+  line(380, 570, 380, 170);//
+  line(235, 440, 380, 510);
+
+  line(380,170, 430,140);
+  
+  stroke(300);                   
+  colorMode( HSB, 340,60,90 );
+  fill( 28, 100, 50 );
+  beginShape();
+  vertex(180, 470);
+  vertex(235, 440);
+  vertex(380, 510);
+  vertex(380,570);
+  endShape();
+
+  stroke(300);                   
+  colorMode( HSB, 340,60,60 );
+  fill( 28, 100, 50 );
+  beginShape();
+  vertex(448,18); 
+  vertex(115, 215);
+  vertex(448, 18);
+  vertex(490, 50);
+  vertex(490, 50);
+  vertex(180, 238);
+  vertex(180, 238);
+  vertex(115, 215);
+  endShape();
+
+  stroke(300);                   
+  colorMode( HSB, 340,60,50 );
+  fill( 28, 100, 50 );
+  beginShape();
+  vertex(490, 50);
+  vertex(180, 238);
+  vertex(180, 238);
+  vertex(180, 470);
+  vertex(180, 470);
+  vertex(235, 440);
+  vertex(235, 440);
+  vertex(235, 260);
+  vertex(235, 260);
+  vertex(430, 140);
+  vertex(430, 682);
+  vertex(430, 140);
+  vertex(430, 682);
+  vertex(490, 650);
+  vertex(490, 650);
+  vertex(490, 50);
+  endShape();
+
+  
+  
+}
 
 void keyPressed() {
   if (keyCode == LEFT) {
     actual = ((actual % 6) + 5) % 6 ;
     println(actual);
   } else if (keyCode == RIGHT) {
-    actual = (actual % 5) + 1;
+    actual = ((actual + 1) % 6);
     println(actual);
   } else if (key == ' ') {
     show = !show;
