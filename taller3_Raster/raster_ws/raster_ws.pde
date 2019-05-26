@@ -24,9 +24,13 @@ String renderer = P3D;
 // 4. Window dimension
 int dim = 10;
 
+
+
 void settings() {
   size(int(pow(2, dim)), int(pow(2, dim)), renderer);
 }
+
+
 
 void setup() {
   scene = new Scene(this);
@@ -61,6 +65,8 @@ void setup() {
   randomizeTriangle();
 }
 
+
+
 void draw() {
   background(0);
   stroke(0, 255, 0);
@@ -76,11 +82,12 @@ void draw() {
   popMatrix();
 }
 
+
+
 // Implement this function to rasterize the triangle.
 // Coordinates are given in the node system which has a dimension of 2^n
 void triangleRaster() {
-  // node.location converts points from world to node
-  // here we convert v1 to illustrate the idea
+  // node.location converts points from world to node. Here we convert v1 to illustrate the idea
   //println("v0: ", node.location(v1).x(), node.location(v1).y(), "  v1: ", node.location(v2).x(), node.location(v2).y(), "  v2: ", node.location(v3).x(), node.location(v3).y());
 
   float det = ((node.location(v2).x()-node.location(v1).x())*(node.location(v3).y()-node.location(v1).y()))-((node.location(v3).x()-node.location(v1).x())*(node.location(v2).y()-node.location(v1).y()));
@@ -107,6 +114,8 @@ void triangleRaster() {
   }
 }
 
+
+
 void randomizeTriangle() {
   int low = -width/2;
   int high = width/2;
@@ -114,6 +123,8 @@ void randomizeTriangle() {
   v2 = new Vector(random(low, high), random(low, high));
   v3 = new Vector(random(low, high), random(low, high));
 }
+
+
 
 void drawTriangleHint() {
   pushStyle();
@@ -129,6 +140,8 @@ void drawTriangleHint() {
   popStyle();
 }
 
+
+// function from vertex 1 to 2 using the point p
 boolean f_12(float px, float py, float det) {
   float first = (floor(node.location(v1).y())-floor(node.location(v2).y()))*px;
   //print("first: "+first);
@@ -150,6 +163,8 @@ boolean f_12(float px, float py, float det) {
   return false;
 }
 
+
+// function from vertex 2 to 3 using the point p
 boolean f_23(float px, float py, float det) {
   float first = (floor(node.location(v2).y())-floor(node.location(v3).y()))*px;
   //print("first: "+first);
@@ -171,6 +186,8 @@ boolean f_23(float px, float py, float det) {
   return false;
 }
 
+
+// function from vertex 3 to 1 using the point p
 boolean f_31(float px, float py, float det) {
   float first = (floor(node.location(v3).y())-floor(node.location(v1).y()))*px;
   //print("first: "+first);
@@ -191,6 +208,8 @@ boolean f_31(float px, float py, float det) {
   }
   return false;
 }
+
+
 
 void keyPressed() {
   if (key == 'g')
