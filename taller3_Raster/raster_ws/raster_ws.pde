@@ -83,7 +83,6 @@ void draw() {
 }
 
 
-
 // Implement this function to rasterize the triangle.
 // Coordinates are given in the node system which has a dimension of 2^n
 void triangleRaster() {
@@ -91,9 +90,10 @@ void triangleRaster() {
   //println("v0: ", node.location(v1).x(), node.location(v1).y(), "  v1: ", node.location(v2).x(), node.location(v2).y(), "  v2: ", node.location(v3).x(), node.location(v3).y());
 
   float det = ((node.location(v2).x()-node.location(v1).x())*(node.location(v3).y()-node.location(v1).y()))-((node.location(v3).x()-node.location(v1).x())*(node.location(v2).y()-node.location(v1).y()));
+  println(pow(2,n));
   for (int i=-floor(pow(2, n)/2); i<pow(2, n)/2; i++) {
     for (int j=-floor(pow(2, n)/2); j<pow(2, n)/2; j++) {
-      if (f_12(i, j, det) && f_23(i, j, det) && f_31(i, j, det)) {
+      if (edgeFunction(v1, v2, i, j, det) && edgeFunction(v2, v3, i, j, det) && edgeFunction(v3, v1, i, j, det)) {
         pushStyle();
         strokeWeight(0.01);    
         rect(i, j, 1, 1);
@@ -141,16 +141,13 @@ void drawTriangleHint() {
 }
 
 
-// function from vertex 1 to 2 using the point p
-boolean f_12(float px, float py, float det) {
-  float first = (floor(node.location(v1).y())-floor(node.location(v2).y()))*px;
-  //print("first: "+first);
-  float second = (floor(node.location(v2).x())-floor(node.location(v1).x()))*py;
-  //print("  second: "+second);
-  float third = floor(node.location(v1).x())*floor(node.location(v2).y())-floor(node.location(v1).y())*floor(node.location(v2).x());
-  //println("  third: "+third);
+//function from vertex a to b according to the point p and the determinant p
+boolean edgeFunction(Vector va, Vector vb, float px, float py, float det){
+  float first = (floor(node.location(va).y())-floor(node.location(vb).y()))*px;
+  float second = (floor(node.location(vb).x())-floor(node.location(va).x()))*py;
+  float third = floor(node.location(va).x())*floor(node.location(vb).y())-floor(node.location(va).y())*floor(node.location(vb).x());
   float aux = first+second+third;
-
+  
   if (det > 0) { //Si los vertices estan ordenados en sentido antihorario 
     if (aux > 0) { //Si p esta a la izquierda del segmento v1 v2
       return true;
@@ -162,53 +159,6 @@ boolean f_12(float px, float py, float det) {
   }
   return false;
 }
-
-
-// function from vertex 2 to 3 using the point p
-boolean f_23(float px, float py, float det) {
-  float first = (floor(node.location(v2).y())-floor(node.location(v3).y()))*px;
-  //print("first: "+first);
-  float second = (floor(node.location(v3).x())-floor(node.location(v2).x()))*py;
-  //print("  second: "+second);
-  float third = floor(node.location(v2).x())*floor(node.location(v3).y())-floor(node.location(v2).y())*floor(node.location(v3).x());
-  //println("  third: "+third);
-  float aux = first+second+third;
-
-  if (det > 0) { //Si los vertices estan ordenados en sentido antihorario 
-    if (aux > 0) { //Si p esta a la izquierda del segmento v1 v2
-      return true;
-    }
-  } else {  //Si los vertices estan ordenados en sentido horario 
-    if (aux < 0) {  //Si p esta a la derecha del segmento v1 v2
-      return true;
-    }
-  }
-  return false;
-}
-
-
-// function from vertex 3 to 1 using the point p
-boolean f_31(float px, float py, float det) {
-  float first = (floor(node.location(v3).y())-floor(node.location(v1).y()))*px;
-  //print("first: "+first);
-  float second = (floor(node.location(v1).x())-floor(node.location(v3).x()))*py;
-  //print("  second: "+second);
-  float third = floor(node.location(v3).x())*floor(node.location(v1).y())-floor(node.location(v3).y())*floor(node.location(v1).x());
-  //println("  third: "+third);
-  float aux = first+second+third;
-
-  if (det > 0) { //Si los vertices estan ordenados en sentido antihorario 
-    if (aux > 0) { //Si p esta a la izquierda del segmento v1 v2
-      return true;
-    }
-  } else {  //Si los vertices estan ordenados en sentido horario 
-    if (aux < 0) {  //Si p esta a la derecha del segmento v1 v2
-      return true;
-    }
-  }
-  return false;
-}
-
 
 
 void keyPressed() {
