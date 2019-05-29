@@ -22,7 +22,7 @@ boolean debug = true;
 String renderer = P3D;
 
 // 4. Window dimension
-int dim = 10;
+int dim = 9;
 
 
 
@@ -90,6 +90,10 @@ void triangleRaster() {
   // node.location converts points from world to node. Here we convert v1 to illustrate the idea
 
   float det = ((node.location(v2).x()-node.location(v1).x())*(node.location(v3).y()-node.location(v1).y()))-((node.location(v3).x()-node.location(v1).x())*(node.location(v2).y()-node.location(v1).y()));
+  pushStyle();
+  noStroke();
+  rect(0.5,0.5,1,1);
+  popStyle();
 
   for (int i=-floor(pow(2, n)/2); i<pow(2, n)/2; i++) {
     for (int j=-floor(pow(2, n)/2); j<pow(2, n)/2; j++) {
@@ -113,7 +117,7 @@ void triangleRaster() {
         //println(r + "   " + g + "   " + b);
         pushStyle();
         strokeWeight(0.01);
-        fill(r+255,g*255,b*255);
+        fill(r*255,g*255,b*255);
         rect(i, j, 1, 1);
         popStyle();
       }
@@ -140,11 +144,11 @@ Result edgeFunction(Vector va, Vector vb, float px, float py, float det){
   float aux = first+second+third;
   
   if (det > 0) { //Si los vertices estan ordenados en sentido antihorario 
-    if (aux > 0) { //Si p esta a la izquierda del segmento v1 v2
+    if (aux >= 0) { //Si p esta a la izquierda del segmento v1 v2
       return new Result(true, abs(aux));
     }
   } else {  //Si los vertices estan ordenados en sentido horario 
-    if (aux < 0) {  //Si p esta a la derecha del segmento v1 v2
+    if (aux <= 0) {  //Si p esta a la derecha del segmento v1 v2
       return new Result(true, abs(aux));
     }
   }
