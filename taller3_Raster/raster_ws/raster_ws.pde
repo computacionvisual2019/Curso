@@ -90,14 +90,18 @@ void triangleRaster() {
   // node.location converts points from world to node. Here we convert v1 to illustrate the idea
 
   float det = ((node.location(v2).x()-node.location(v1).x())*(node.location(v3).y()-node.location(v1).y()))-((node.location(v3).x()-node.location(v1).x())*(node.location(v2).y()-node.location(v1).y()));
- 
+
   for (int i=-floor(pow(2, n)/2); i<pow(2, n)/2; i++) {
     for (int j=-floor(pow(2, n)/2); j<pow(2, n)/2; j++) {
+      
       Result w0 = edgeFunction(v1, v2, i, j, det); 
       Result w1 = edgeFunction(v2, v3, i, j, det);
       Result w2 = edgeFunction(v3, v1, i, j, det);
+      
       if (w0.getRender() && w1.getRender() && w2.getRender()) {
+        
         float total = w0.getArea()+w1.getArea()+w2.getArea();
+        println(det + "   " + total + "   ");
         w0.setNormalArea(w0.getArea()/total);
         w1.setNormalArea(w1.getArea()/total);
         w2.setNormalArea(w2.getArea()/total);
@@ -106,7 +110,7 @@ void triangleRaster() {
         float g = w0.getNormalArea() * 0 + w1.getNormalArea() * 1 + w2.getNormalArea() * 0;
         float b = w0.getNormalArea() * 0 + w1.getNormalArea() * 0 + w2.getNormalArea() * 1;
    
-        println(r + "   " + g + "   " + b);
+        //println(r + "   " + g + "   " + b);
         pushStyle();
         strokeWeight(0.01);
         fill(r+255,g*255,b*255);
@@ -218,7 +222,7 @@ public class Result{
   }
   
   public float getArea(){
-    return this.area;
+    return abs(this.area);
   }
   
   public float getNormalArea(){
