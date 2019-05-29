@@ -83,26 +83,38 @@ void draw() {
 }
 
 
+
 // Implement this function to rasterize the triangle.
 // Coordinates are given in the node system which has a dimension of 2^n
 void triangleRaster() {
   // node.location converts points from world to node. Here we convert v1 to illustrate the idea
-  //println("v0: ", node.location(v1).x(), node.location(v1).y(), "  v1: ", node.location(v2).x(), node.location(v2).y(), "  v2: ", node.location(v3).x(), node.location(v3).y());
 
   float det = ((node.location(v2).x()-node.location(v1).x())*(node.location(v3).y()-node.location(v1).y()))-((node.location(v3).x()-node.location(v1).x())*(node.location(v2).y()-node.location(v1).y()));
-  println(pow(2,n));
+ 
   for (int i=-floor(pow(2, n)/2); i<pow(2, n)/2; i++) {
     for (int j=-floor(pow(2, n)/2); j<pow(2, n)/2; j++) {
-      if (edgeFunction(v1, v2, i, j, det) && edgeFunction(v2, v3, i, j, det) && edgeFunction(v3, v1, i, j, det)) {
+      Result w0 = edgeFunction(v1, v2, i, j, det); 
+      Result w1 = edgeFunction(v2, v3, i, j, det);
+      Result w2 = edgeFunction(v3, v1, i, j, det);
+      if (w0.getRender() && w1.getRender() && w2.getRender()) {
+        float total = w0.getArea()+w1.getArea()+w2.getArea();
+        w0.setNormalArea(w0.getArea()/total);
+        w1.setNormalArea(w1.getArea()/total);
+        w2.setNormalArea(w2.getArea()/total);
+ 
+        float r = w0.getNormalArea() * 1 + w1.getNormalArea() * 0 + w2.getNormalArea() * 0; 
+        float g = w0.getNormalArea() * 0 + w1.getNormalArea() * 1 + w2.getNormalArea() * 0;
+        float b = w0.getNormalArea() * 0 + w1.getNormalArea() * 0 + w2.getNormalArea() * 1;
+   
+        //println(r*255 + "   " + g*255 + "   " + b*255);
         pushStyle();
-        strokeWeight(0.01);    
+        strokeWeight(0.01);
+        fill(r+255,g*255,b*255);
         rect(i, j, 1, 1);
         popStyle();
       }
     }
   }
-  //println(f_23(-5, -5, det));
-  //rect(-5,-5,1,1);
 
   if (debug) {
     pushStyle();
@@ -112,6 +124,27 @@ void triangleRaster() {
     point(round(node.location(v2).x()), round(node.location(v2).y()));
     popStyle();
   }
+}
+
+
+
+//function from vertex a to b according to the point p and the determinant p
+Result edgeFunction(Vector va, Vector vb, float px, float py, float det){
+  float first = (floor(node.location(va).y())-floor(node.location(vb).y()))*px;
+  float second = (floor(node.location(vb).x())-floor(node.location(va).x()))*py;
+  float third = floor(node.location(va).x())*floor(node.location(vb).y())-floor(node.location(va).y())*floor(node.location(vb).x());
+  float aux = first+second+third;
+  
+  if (det > 0) { //Si los vertices estan ordenados en sentido antihorario 
+    if (aux > 0) { //Si p esta a la izquierda del segmento v1 v2
+      return new Result(true, abs(aux));
+    }
+  } else {  //Si los vertices estan ordenados en sentido horario 
+    if (aux < 0) {  //Si p esta a la derecha del segmento v1 v2
+      return new Result(true, abs(aux));
+    }
+  }
+  return new Result(false, abs(aux));
 }
 
 
@@ -141,25 +174,6 @@ void drawTriangleHint() {
 }
 
 
-//function from vertex a to b according to the point p and the determinant p
-boolean edgeFunction(Vector va, Vector vb, float px, float py, float det){
-  float first = (floor(node.location(va).y())-floor(node.location(vb).y()))*px;
-  float second = (floor(node.location(vb).x())-floor(node.location(va).x()))*py;
-  float third = floor(node.location(va).x())*floor(node.location(vb).y())-floor(node.location(va).y())*floor(node.location(vb).x());
-  float aux = first+second+third;
-  
-  if (det > 0) { //Si los vertices estan ordenados en sentido antihorario 
-    if (aux > 0) { //Si p esta a la izquierda del segmento v1 v2
-      return true;
-    }
-  } else {  //Si los vertices estan ordenados en sentido horario 
-    if (aux < 0) {  //Si p esta a la derecha del segmento v1 v2
-      return true;
-    }
-  }
-  return false;
-}
-
 
 void keyPressed() {
   if (key == 'g')
@@ -185,4 +199,33 @@ void keyPressed() {
       spinningTask.run(20);
   if (key == 'y')
     yDirection = !yDirection;
+}
+
+
+
+public class Result{
+  private boolean render;
+  private float area;
+  private float normalArea = 0; 
+  
+  public Result(boolean render, float area){
+    this.render = render;
+    this.area = area;
+  }
+  
+  public boolean getRender(){
+    return this.render;
+  }
+  
+  public float getArea(){
+    return this.area;
+  }
+  
+  public float getNormalArea(){
+    return this.normalArea;
+  }
+  
+  public void setNormalArea(float normalArea){
+    this.normalArea = normalArea;
+  }
 }
