@@ -106,7 +106,7 @@ void triangleRaster() {
         float g = w0.getNormalArea() * 0 + w1.getNormalArea() * 1 + w2.getNormalArea() * 0;
         float b = w0.getNormalArea() * 0 + w1.getNormalArea() * 0 + w2.getNormalArea() * 1;
    
-        //println(r*255 + "   " + g*255 + "   " + b*255);
+        println(r + "   " + g + "   " + b);
         pushStyle();
         strokeWeight(0.01);
         fill(r+255,g*255,b*255);
