@@ -1,7 +1,9 @@
+import java.util.ArrayList;
 import nub.timing.*;
 import nub.primitives.*;
 import nub.core.*;
 import nub.processing.*;
+
 
 // 1. Nub objects
 Scene scene;
@@ -24,7 +26,8 @@ String renderer = P3D;
 // 4. Window dimension
 int dim = 10;
 
-
+// Determinant
+float det = 0;
 
 void settings() {
   size(int(pow(2, dim)), int(pow(2, dim)), renderer);
@@ -89,7 +92,7 @@ void draw() {
 void triangleRaster() {
   // node.location converts points from world to node. Here we convert v1 to illustrate the idea
 
-  float det = ((node.location(v2).x()-node.location(v1).x())*(node.location(v3).y()-node.location(v1).y()))-((node.location(v3).x()-node.location(v1).x())*(node.location(v2).y()-node.location(v1).y()));
+  det = ((node.location(v2).x()-node.location(v1).x())*(node.location(v3).y()-node.location(v1).y()))-((node.location(v3).x()-node.location(v1).x())*(node.location(v2).y()-node.location(v1).y()));
 
   for (float i=-pow(2, n)/2; i<pow(2, n)/2; i++) {
     for (float j=-pow(2, n)/2; j<pow(2, n)/2; j++) {
@@ -115,25 +118,25 @@ void triangleRaster() {
         rect(i, j, 1, 1);
         popStyle();
 
-        if (w0.getArea() < tolerance(v1, v2)){
-         //   border(int(i), int(j), );
-           pushStyle();
-          strokeWeight(0.01);
-          fill(0, 0, 255);
-          rect(i, j, 1, 1);
-          popStyle();
-        }else if (w1.getArea() < tolerance(v2, v3)){
-         //   border(int(i), int(j), );
-         pushStyle();
-          strokeWeight(0.01);
-          fill(255, 0, 0);
-          rect(i, j, 1, 1);
-          popStyle();
-        }else if (w2.getArea() < tolerance(v1, v2)) {
-           border(int(i), int(j), );
+        if (w0.getArea() < tolerance(v1, v2)) {
+          float average = border(int(i), int(j), w0.getVa(), w0.getVb());
           pushStyle();
-         strokeWeight(0.01);
-          fill(0, 255, 0);
+          strokeWeight(0.01);
+          fill(r*255*average, g*255*average, b*255*average);
+          rect(i, j, 1, 1);
+          popStyle();
+        } else if (w1.getArea() < tolerance(v2, v3)) {
+          float average = border(int(i), int(j), w1.getVa(), w1.getVb());           
+          pushStyle();
+          strokeWeight(0.01);
+          fill(r*255*average, g*255*average, b*255*average);
+          rect(i, j, 1, 1);
+          popStyle();
+        } else if (w2.getArea() < tolerance(v1, v2)) {
+          float average = border(int(i), int(j), w2.getVa(), w2.getVb());
+          pushStyle();
+          strokeWeight(0.01);
+          fill(r*255*average, g*255*average, b*255*average);
           rect(i, j, 1, 1);
           popStyle();
         }
@@ -152,7 +155,7 @@ void triangleRaster() {
 }
 
 
-// tolerancia: area maxima permitida
+// tolerancia: area maxima permitida para el triangulo
 float tolerance(Vector va, Vector vb) {
   float xVertex = pow((node.location(vb).x()-node.location(va).x()), 2);
   float yVertex = pow((node.location(vb).y()-node.location(va).y()), 2);
@@ -161,13 +164,31 @@ float tolerance(Vector va, Vector vb) {
 
 
 
-void border(int px, int py, Vector va, Vector vb){
-  int n = 4;
-   for (float i = px; i < px+1; i += 1/n) {
-     for (int j = py; j < py; j += 1/n) {
-       
-     }
-   }
+// tolerancia: area maxima permitida para el pixel
+float tolerancePixel(Vector va, Vector vb) {
+  float xVertex = pow((node.location(vb).x()-node.location(va).x()), 2);
+  float yVertex = pow((node.location(vb).y()-node.location(va).y()), 2);
+  return sqrt(xVertex+yVertex)*sqrt(0.125)/2;
+}
+
+
+
+float border(int px, int py, Vector va, Vector vb) {
+  int count = 0;
+  int n = 16;
+  ArrayList<Float> steps = new ArrayList <Float>();
+  for (int k = 0; k < n; ++k) {
+     steps.add(k/n);
+  }
+  for (float i : steps) {
+    for (float j : steps) {
+      if (pixelEdge(va, vb, px+i, py+j, det)) {
+        count ++;
+      }
+    }
+  }
+
+  return (count/pow(n, 2));
 } 
 
 
@@ -194,6 +215,27 @@ Result edgeFunction(Vector va, Vector vb, float px, float py, float det) {
 }
 
 
+
+//function from vertex a to b according to the point p inside a pixel
+boolean pixelEdge(Vector va, Vector vb, float px, float py, float det) {
+  float first = (floor(node.location(va).y())-floor(node.location(vb).y()))*px;
+  float second = (floor(node.location(vb).x())-floor(node.location(va).x()))*py;
+  float third = floor(node.location(va).x())*floor(node.location(vb).y())-floor(node.location(va).y())*floor(node.location(vb).x());
+  float aux = first+second+third;
+
+  float tolerance = tolerancePixel(va, vb);
+
+  if (det > 0) { //Si los vertices estan ordenados en sentido antihorario 
+    if (aux > -tolerance) { //Si p esta a la izquierda del segmento v1 v2
+      return true;
+    }
+  } else {  //Si los vertices estan ordenados en sentido horario 
+    if (aux < tolerance) {  //Si p esta a la derecha del segmento v1 v2
+      return true;
+    }
+  }
+  return false;
+}
 
 
 
@@ -251,7 +293,7 @@ void keyPressed() {
   if (key == 'y')
     yDirection = !yDirection;
 }
- 
+
 
 public class Result {
   private boolean render;
@@ -267,7 +309,7 @@ public class Result {
     this.area = area;
   }
 
-   public Result(boolean render, float area) {
+  public Result(boolean render, float area) {
     this.render = render;
     this.area = area;
   }
@@ -280,11 +322,11 @@ public class Result {
     return abs(this.area);
   }
 
-   public Vector getVa() {
+  public Vector getVa() {
     return this.va;
   }
 
-   public Vector getVb() {
+  public Vector getVb() {
     return this.vb;
   }
 
