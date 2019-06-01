@@ -24,7 +24,7 @@ boolean debug = true;
 String renderer = P3D;
 
 // 4. Window dimension
-int dim = 10;
+int dim = 9;
 
 // Determinant
 float det = 0;
@@ -175,7 +175,7 @@ float tolerancePixel(Vector va, Vector vb) {
 
 float border(int px, int py, Vector va, Vector vb) {
   int count = 0;
-  int n = 16;
+  float n = 32;
   ArrayList<Float> steps = new ArrayList <Float>();
   for (int k = 0; k < n; ++k) {
      steps.add(k/n);
