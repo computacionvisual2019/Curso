@@ -24,3 +24,7 @@ Implementación de seis ilusiones ópticas distribuidas de la siguiente manera:
 |Steeping feet|Psicologica|Autor: Greg Wittmann|Con la tecla espacio se eliminan los rectangulos que dan vida a la ilusión|https://www.openprocessing.org/sketch/168574|
 |Imposible object|Ambigua||No hay interactividad|https://www.imagenesmi.com/im%C3%A1genes/impossible-objects-illusions-fa.html|
 |Vanishing point|Psicológica|Autor: Shane Solari|El movimiento del mouse indica el sentido hacia el cual se dirigen las lineas desde el punto de origen|https://www.openprocessing.org/sketch/523058|
+
+# Taller 3
+
+Para el anti-aliasing se empleo una tecnica, donde primero se identificaban los pixelex que conforman los limites del triangulo es decir el borde, luego se identifica el vector que pasa sobre esos pixeles, se subdivide cada pixel y mediante la misma tecnica usada para rasterizar el triangulo, se identifica la cantidad de sub-pixeles que estan dentro del triangulo y se obtiene un valor que corresponde a el porcentaje del valor actual del color del pixel y ese color se usara para que el pixel sea pintado nuevamente. Este proceso se lleva acabo con todos los pixeles pertenecientes al borde del triangulo.   
