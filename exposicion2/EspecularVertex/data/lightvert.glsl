@@ -24,7 +24,7 @@ void main() {
   // vec3 lightDirectionReflected = reflect(-lightDirection, ecNormal); // reflejo de la luz que impacta
   vec3 lightDirectionReflected = manualReflect(-lightDirection, ecNormal);
 
-  float intensity = max(0.0, dot(lightDirectionReflected, cameraDirection));
+  float intensity = max(0.0, pow(dot(lightDirectionReflected, cameraDirection), 1));
   vertColor = vec4(intensity, intensity, intensity, 1) * color;             
 }
 

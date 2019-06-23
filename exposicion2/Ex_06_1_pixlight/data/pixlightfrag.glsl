@@ -14,7 +14,7 @@ void main() {
   float intensityDif = max(0.0, dot(directionDif, normal));
   vec3 directionSpec = normalize(lightDirectionReflected);
   vec3 camera = normalize(cameraDirection);
-  float intensitySpec = pow(max(0.0, dot(directionSpec, camera)), 32);
+  float intensitySpec = pow(max(0.0, pow(dot(directionSpec, camera), 10)), 32);
   
   vec4 colorDif = vec4(intensityDif, intensityDif, intensityDif, 1);   
   vec4 colorSpec = vec4(intensitySpec, intensitySpec, intensitySpec, 1);  

@@ -18,7 +18,7 @@ void main() {
   vec3 lightDirection = normalize(lightPosition.xyz - ecPosition);
   vec3 cameraDirection = normalize(0 - ecPosition);
   vec3 lightDirectionReflected = reflect(-lightDirection, ecNormal);
-  float intensitySpec = pow(max(0.0, dot(lightDirectionReflected, cameraDirection)), 8);
+  float intensitySpec = pow(max(0.0, pow(dot(lightDirectionReflected, cameraDirection), 4)), 8);
   vec4 vertColorSpec = vec4(intensitySpec, intensitySpec, intensitySpec, 1); 
 
   float ambientStrength = 0.1;
