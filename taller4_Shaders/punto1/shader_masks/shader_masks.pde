@@ -1,24 +1,45 @@
+
 import processing.video.*; 
-PImage bwImage;
+PImage img;
 Movie colorMovie;
 PShape can;
 float angle;
 
-void setup() {
-  size(640, 640, P3D); 
+int actual = 0;
 
+PShader actualShader;
+
+void setup() {
+  size(640, 640, P3D);  
   colorMovie = new Movie(this, "demo.mp4");
   colorMovie.play();
-
-  bwImage = createImage(1280, 720, RGB);
+  img = colorMovie;
+  actualShader = loadShader("coloredfrag.glsl");
+  can = createCan(200, 400, 32, img);
 }
 
 void draw() {    
   background(0);
-      
-  bwImage = blackWhite(colorMovie);
-  can = createCan(200, 400, 32, bwImage);
 
+  if (colorMovie.pixels.length != 0) {
+    switch (actual) {
+    case 0:
+      actualShader = loadShader("coloredfrag.glsl");
+      break ;
+    case 1:
+      actualShader = loadShader("bwfrag.glsl");
+      break ;
+    case 2:
+      actualShader = loadShader("edgesfrag.glsl");
+      break;
+    case 3:
+      actualShader = loadShader("embossfrag.glsl");
+      break;
+    }
+  }
+
+  shader(actualShader);
+    
   translate(width/2, height/2);
   rotateY(angle);  
   shape(can);  
@@ -46,22 +67,18 @@ PShape createCan(float r, float h, int detail, PImage tex) {
   return sh;
 }
 
-PImage blackWhite(PImage colorImage){
-  colorImage.loadPixels();
-  PImage aux = new PImage(1280, 720, RGB); 
-  for (int i = 0; i < colorImage.pixels.length; ++i) {
-    float r = red(colorImage.pixels[i]);
-    float g = green(colorImage.pixels[i]);
-    float b = blue(colorImage.pixels[i]);  
-    float p = (0.299*r+0.587*g+0.114*b);
-    if (127.5 < p) {
-      aux.pixels[i] = color(255, 255, 255); //queda con el mismo color que entro
-    } else {
-      aux.pixels[i] = color(0, 0, 0); 
-    }
+void keyPressed() {
+  if (keyCode == '1') {
+    actual = 0;
+  } else if (keyCode == '2') {
+    actual = 1;
+  } else if (keyCode == '3') {
+    actual = 2;
+  } else if (keyCode == '4') {
+    actual = 3;
   }
-  return aux;
 }
+
 
 void movieEvent(Movie m) {
   m.read();

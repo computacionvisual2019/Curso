@@ -28,6 +28,8 @@ void draw() {
   rotateY(angle);  
   shape(can);  
   angle += 0.01;
+  
+  println(frameRate);
 }
 
 PShape createCan(float r, float h, int detail, PImage tex) {
