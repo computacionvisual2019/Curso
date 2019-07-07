@@ -8,9 +8,14 @@
 # Taller 1
 
 El trabajo se divide en tres carpetas de la siguiente forma: 
-- punto1_3_4: Corresponde a la implementación de la escala de grises utilizando la configuración LUMA para la preservación del brillo de la imagen; el histograma con la segmentación interactiva reflejada en la imagen, al hacer click sobre el histograma y mover el mouse se selecciona el único segmento de pixeles que se quiere pintar de la imagen.
-- punto2: La aplicación de las máscaras desenfoque, enfoque, bordes y realce. 
-- punto5: La medición de los fps para 4 videos simultaneos con dos de las máscaras mencionadas anteriormente además de la escala de grises utilizando LUMA.
+- Punto1_3_4: 
+Corresponde a la implementación de la escala de grises utilizando la configuración LUMA para la preservación del brillo de la imagen; el histograma con la segmentación interactiva reflejada en la imagen, al hacer click sobre el histograma y mover el mouse se selecciona el único segmento de pixeles que se quiere pintar de la imagen.
+
+- Punto2: 
+La aplicación de las máscaras desenfoque, enfoque, bordes y realce. 
+
+- Punto5: 
+La medición de los fps para 4 videos simultaneos con dos de las máscaras mencionadas anteriormente además de la escala de grises utilizando LUMA.
 
 # Taller 2
 
@@ -35,4 +40,13 @@ Para el anti-aliasing se empleo una tecnica, donde primero se identificaban los 
 
 Referencia: https://www.scratchapixel.com/lessons/3d-basic-rendering/rasterization-practical-implementation/rasterization-stage
 
+# Taller 4
+- Punto 1: 
+Se aplicaron tanto las máscaras de convolusión por software utilizando la libreria "video" para cargar la grabación sobre la superficie de la lata; como por hardware utilizando los shaders adecuados para ello. Como se esperaba, el procesamiento realizado con la ayuda de la tarjeta grafica es mucho más fluido y de acuerdo a los fotogramas por segundo casi triplica a los obtenidos en la prueba por software.
 
+- Punto 2:
+Se implementan la combinación de diferentes formas de luz, utilizando la librería nub para asignar a una esfera la ubicación de la luz de tal forma que sea posible darle movilidad a la fuente (tanto rotación como translación) y verificar el comportamiento de la luz reflejada en la superficie del cilindro.
+
+- Punto 3:
+Bump mapping: Se utilizaron en total 5 superficies distintas que fueron montadas sobre una forma cilíndrica. Las imágenes a color y con sus respectivas normales fueron btenidas de: https://opengameart.org/content/50-free-textures-4-normalmaps. El tutorial guía para la implementación de los shaders se puede acceder en el siguiente link: https://www.openprocessing.org/sketch/140356/.
+En cuanto a la ejecución del programa, se utilizan los numeros del 1 al 5 para cargar las distintas superficies tanto del script que utiliza normal mapping como el que no. Se recomienda correr ambos al tiempo para notar las diferencias entre mapeos. 
