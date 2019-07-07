@@ -1,33 +1,20 @@
-PImage normalImage1, colorImage1,
- normalImage2, colorImage2, 
- normalImage3, colorImage3,
- normalImage4, colorImage4,
- normalImage5, colorImage5 ;
+PImage colorImage1, colorImage2, colorImage3, colorImage4, colorImage5;
 PShape can;
 float angle;
 
 int selectImage = 1;
 
-PShader texShader;
-
 void setup() {
   size(700, 700, P3D);  
-  normalImage1 = loadImage("brickwall1_normal.png");
   colorImage1 = loadImage("brickwall1_color.jpg");
 
-  normalImage2 = loadImage("brickwall2_normal.jpg");
   colorImage2 = loadImage("brickwall2_color.jpg");
 
-  normalImage3 = loadImage("stone1_normal.jpg");
   colorImage3 = loadImage("stone1_color.jpg");
-  
-  normalImage4 = loadImage("stone2_normal.jpg");
-  colorImage4 = loadImage("stone2_color.jpg");
-  
-  normalImage5 = loadImage("brickwall3_normal.jpg");
-  colorImage5 = loadImage("brickwall3_color.jpg");
 
-  texShader = loadShader("texfrag.glsl", "texvert.glsl");
+  colorImage4 = loadImage("stone2_color.jpg");
+
+  colorImage5 = loadImage("brickwall3_color.jpg");
 }
 
 void draw() {    
@@ -36,29 +23,22 @@ void draw() {
   switch (selectImage) {
   case 1 :
     can = createCan(150, 300, 32, colorImage1);
-    texShader.set("normalMap", normalImage1);
     break;	
   case 2 :
     can = createCan(150, 300, 32, colorImage2);
-    texShader.set("normalMap", normalImage2);
     break;	
   case 3 :
     can = createCan(150, 300, 32, colorImage3);
-    texShader.set("normalMap", normalImage3);
     break;
   case 4 :
     can = createCan(150, 300, 32, colorImage4);
-    texShader.set("normalMap", normalImage4);
     break;
   case 5 :
     can = createCan(150, 300, 32, colorImage5);
-    texShader.set("normalMap", normalImage5);
     break;
   }
 
-  shader(texShader); 
-
-  pointLight(255, 255, 255, width/2, height/2, 200); 
+  pointLight(255, 255, 255, width/2, height/2, 20); 
 
   translate(width/2, height/2);
   rotateY(angle);  
